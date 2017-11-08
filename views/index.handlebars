@@ -1,0 +1,43 @@
+<h1>Eat-Da-Burger!</h1>
+
+<ul>
+  {{#each burger}}
+    <li>
+      <p>
+        {{this.id}}. {{this.burger}}
+
+        <button data-burgerid="{{this.id}}" class="devourBurger">Devour!</button>
+      </p>
+    </li>
+  {{/each}}
+</ul>
+
+<form id="enterBurger">
+	<input type="text" name="id" placeholder="Nom!">
+	<br>
+	<p>Enter a burger you'd like to eat and click the Submit button!</p>
+	<br>
+	<button type="submit" id="addBurger">Submit</button>
+</form>
+
+<script type="text/javascript">
+
+$("#addBurger").on("click", function(event) {
+	event.preventDefault();
+
+	var newBurger = {
+		burger: $("#addBurger").val().trim()
+	};
+
+	$.ajax("/burger", {
+	type: "POST",
+	data: newBurger
+	}).then(
+	function() {
+		console.log("Added burger");
+		location.reload();
+	});
+
+});
+
+</script>
